@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36301.6 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatHealth", "BeatHealth\BeatHealth.csproj", "{9C454BDD-0107-49F7-B32F-E826A3A65841}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C454BDD-0107-49F7-B32F-E826A3A65841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C454BDD-0107-49F7-B32F-E826A3A65841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C454BDD-0107-49F7-B32F-E826A3A65841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C454BDD-0107-49F7-B32F-E826A3A65841}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D8918394-2919-48FD-B1FB-07C90E5C15B7}
+	EndGlobalSection
+EndGlobal
