@@ -1,6 +1,7 @@
 ﻿using BeatHealth.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 
 namespace BeatHealth.Controllers
 {
@@ -11,16 +12,29 @@ namespace BeatHealth.Controllers
         private readonly DoctorService _doctorService;
     public    DoctorController(DoctorService doctorService) { _doctorService = doctorService; }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetDoctor(int id)
+        [HttpGet("{id?}")]
+        public async Task<IActionResult> GetDoctor(int id=0)
         {
-
-            List<Doctor> r =[];
-            r=await _doctorService.Get(id);
-            return Ok(r);
+            try
+            {
+                List<Doctor> r = await _doctorService.Get(id);
+                if (id==0&&r.Count==1)return Ok(r.First());
+                return Ok(r);
+            }
+            catch (MySqlException ex) { return StatusCode(500,ex.ToString()); }
+            catch (Exception ex) { return StatusCode(500,"Unexpected Error"); }
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateDoctor([FromBody] Doctor d) {
+        
+            int id= await _doctorService.Post(d);
+            if (id == 0) return StatusCode(400,"Could not create a new doctor");
 
+            return Ok(d);
+        
+        
+        }
     }
 }
