@@ -15,26 +15,18 @@ namespace BeatHealth.Controllers
         [HttpGet("{id?}")]
         public async Task<IActionResult> GetDoctor(int id=0)
         {
-            try
-            {
                 List<Doctor> r = await _doctorService.Get(id);
                 if (id==0&&r.Count==1)return Ok(r.First());
                 return Ok(r);
-            }
-            catch (MySqlException ex) { return StatusCode(500,ex.ToString()); }
-            catch (Exception ex) { return StatusCode(500,"Unexpected Error"); }
-
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateDoctor([FromBody] Doctor d) {
-        
+        public async Task<IActionResult> CreateDoctor([FromBody] Doctor d) 
+        {
             int id= await _doctorService.Post(d);
             if (id == 0) return StatusCode(400,"Could not create a new doctor");
-
             return Ok(d);
-        
-        
+               
         }
     }
 }
