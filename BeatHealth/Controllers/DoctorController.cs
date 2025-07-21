@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-
 namespace BeatHealth.Controllers
 {
     [Route("api/[controller]")]
@@ -10,7 +9,7 @@ namespace BeatHealth.Controllers
     public class DoctorController : ControllerBase
     {
         private readonly DoctorService _doctorService;
-    public    DoctorController(DoctorService doctorService) { _doctorService = doctorService; }
+    public DoctorController(DoctorService doctorService) { _doctorService = doctorService; }
 
         [HttpGet("{id?}")]
         public async Task<IActionResult> GetDoctor(int id=0)
@@ -27,6 +26,13 @@ namespace BeatHealth.Controllers
             if (id == 0) return StatusCode(400,"Could not create a new doctor");
             return Ok(d);
                
+        }
+        [HttpPost("{id}/schedule")]
+        public async Task<IActionResult> CreateSchedule([FromHeader] int id,[FromBody] List<DoctorSchedule> ds)
+        {
+            int result = await _doctorService.CreateSchedule(id,ds);
+            if (result != 0) return BadRequest();
+            return Ok();
         }
     }
 }

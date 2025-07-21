@@ -100,6 +100,59 @@ namespace BeatHealth.Services
             return result;
         }
 
+
+        public async Task<int> CreateSchedule(int id,List<DoctorSchedule> ds)
+        {
+            if (ds.Count != 7)
+                return -1;
+
+            await _connection.OpenAsync();
+            using var tran = await _connection.BeginTransactionAsync();
+
+
+            try
+            {
+
+                MySqlCommand cmd1 = new()
+                {
+                    Connection = _connection,
+                    Transaction = tran,
+                    CommandText = " delete from co.doctor_schedule where doctor_id= @id ; "
+
+                };
+                cmd1.Parameters.AddWithValue("@id", id);
+                await cmd1.ExecuteNonQueryAsync();
+
+                foreach (var item in ds)
+                {
+                     MySqlCommand cmd2 = new()
+                {
+                    Connection = _connection,
+                    Transaction = tran,
+                    CommandText = "insert into co.doctor_schedule " +
+                    "values(@id,@day,@from,@to,default); "
+                     };
+                     cmd2.Parameters.AddWithValue("@id", id);
+                     cmd2.Parameters.AddWithValue("@day", item.Day);
+                     cmd2.Parameters.AddWithValue("@from", item.From);
+                    cmd2.Parameters.AddWithValue("@to", item.To);
+
+                    await cmd2.ExecuteNonQueryAsync();
+                }
+                await tran.CommitAsync();
+                await _connection.CloseAsync();
+
+            }
+            catch (Exception)
+            {
+                await tran.RollbackAsync();
+                throw;
+            }
+
+            return 0;
+        }
+
+
     }
     
 }

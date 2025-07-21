@@ -16,3 +16,12 @@ public class Doctor(
     public string Specialty { get; } = specialty;
     public string BankAccount { get; } = bankAccount;
 }
+
+public class DoctorSchedule(DayOfWeek day,TimeOnly from,TimeOnly to)
+{
+
+    public DayOfWeek Day { get;  }=day ;
+    public TimeOnly From { get; }=from;
+    public TimeOnly To { get; }=to;
+    
+}
